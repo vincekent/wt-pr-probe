@@ -1,0 +1,11 @@
+name: ci
+on: [pull_request, push]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - run: python -m py_compile $(git ls-files '*.py')
+      - run: python -m unittest discover -s . -p 'test_*.py' -v
